@@ -49,7 +49,9 @@ class AlunoForm(forms.ModelForm):
             hoje = date.today()
             idade = hoje.year - nascimento.year - ((hoje.month, hoje.day) < (nascimento.month, nascimento.day))
             if idade > 150:
-                raise forms.ValidationError("A idade máxima permitida é de 150 anos.")
+                raise forms.ValidationError("Insira uma data de nascimento válida de até 150 anos.")
+            if idade < 1:
+                raise forms.ValidationError("Insira uma data de nascimento válida.")
         return nascimento
 
 
