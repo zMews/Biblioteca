@@ -3,22 +3,20 @@ from .models import Aluno
 from .models import Livro
 from .models import Emprestimo
 from django.core.exceptions import ValidationError
+from datetime import date
+import re
 
 class AlunoForm(forms.ModelForm):
     class Meta:
         model = Aluno
         fields = ['nome', 'matricula', 'email', 'curso', 'data_nascimento']
-
         widgets = {
             'nome': forms.TextInput(attrs={'placeholder': 'Nome completo'}),
             'matricula': forms.NumberInput(attrs={'placeholder': 'Matrícula'}),
             'email': forms.EmailInput(attrs={'placeholder': 'exemplo@email.com'}),
             'curso': forms.TextInput(attrs={'placeholder': 'Curso'}),
-            'data_nascimento': forms.DateInput(attrs={'type': 'date'},format='%Y-%m-%d'
-            ),
-
+            'data_nascimento': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
         }
-
         labels = {
             'nome': 'Nome completo',
             'matricula': 'Matrícula',
@@ -26,6 +24,33 @@ class AlunoForm(forms.ModelForm):
             'curso': 'Curso',
             'data_nascimento': 'Data de nascimento',
         }
+
+    def clean_nome(self):
+        nome = self.cleaned_data.get('nome')
+        if not re.fullmatch(r'[A-Za-zÀ-ÿ\s]+', nome):
+            raise forms.ValidationError("O nome deve conter apenas letras e espaços.")
+        return nome
+
+    def clean_curso(self):
+        curso = self.cleaned_data.get('curso')
+        if not re.fullmatch(r'[A-Za-zÀ-ÿ\s]+', curso):
+            raise forms.ValidationError("O curso deve conter apenas letras e espaços.")
+        return curso
+
+    def clean_matricula(self):
+        matricula = self.cleaned_data.get('matricula')
+        if matricula is not None and matricula <= 0:
+            raise forms.ValidationError("A matrícula deve ser um número positivo.")
+        return matricula
+
+    def clean_data_nascimento(self):
+        nascimento = self.cleaned_data.get('data_nascimento')
+        if nascimento:
+            hoje = date.today()
+            idade = hoje.year - nascimento.year - ((hoje.month, hoje.day) < (nascimento.month, nascimento.day))
+            if idade > 150:
+                raise forms.ValidationError("A idade máxima permitida é de 150 anos.")
+        return nascimento
 
 
 class LivroForm(forms.ModelForm):
@@ -48,7 +73,6 @@ class LivroForm(forms.ModelForm):
             'isbn': 'ISBN',
             'quantidade_disponivel': 'Exemplares disponíveis',
         }
-
 
 class EmprestimoForm(forms.ModelForm):
     class Meta:
