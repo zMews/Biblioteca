@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ('titulo', models.CharField(max_length=200)),
                 ('autor', models.CharField(max_length=100)),
                 ('editora', models.CharField(max_length=100)),
-                ('isbn', models.IntegerField(primary_key=True, serialize=False)),
+                ('isbn', models.BigIntegerField(primary_key=True, serialize=False)),
                 ('quantidade_disponivel', models.SmallIntegerField()),
             ],
         ),
