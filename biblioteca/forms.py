@@ -67,6 +67,8 @@ class EmprestimoForm(forms.ModelForm):
             'data_devolucao': 'Data prevista para devolução',
         }
 
+
+#overdrive clean
     def clean(self):
         cleaned_data = super().clean()
         livro = cleaned_data.get('livro')

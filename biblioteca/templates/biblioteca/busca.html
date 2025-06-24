@@ -1,7 +1,6 @@
-
 <h1>Busca</h1>
 
-<form method="get">
+<form method="get" class="mb-4">
     <input type="text" name="q" placeholder="Buscar aluno ou livro..." value="{{ termo }}">
     <button type="submit">Buscar</button>
 </form>
@@ -22,7 +21,9 @@
         <h3>Livros</h3>
         <ul>
             {% for livro in livros %}
-                <li>{{ livro.titulo }} – Autor: {{ livro.autor }}</li>
+                <li>
+                    {{ livro.titulo }} – Autor: {{ livro.autor }} – Disponíveis: {{ livro.quantidade_disponivel }}
+                </li>
             {% endfor %}
         </ul>
     {% endif %}
@@ -31,4 +32,5 @@
         <p>Nenhum resultado encontrado.</p>
     {% endif %}
 {% endif %}
+
 <a href="{% url 'home' %}">← Voltar para a Página Inicial</a>
