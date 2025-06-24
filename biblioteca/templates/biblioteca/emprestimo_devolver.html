@@ -1,0 +1,8 @@
+<h1>Registrar Devolução</h1>
+<p>Tem certeza que deseja marcar como devolvido:</p>
+<p><strong>{{ emprestimo.aluno }} → {{ emprestimo.livro }}</strong></p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Confirmar Devolução</button>
+</form>
+<a href="{% url 'emprestimo_list' %}">Cancelar</a>

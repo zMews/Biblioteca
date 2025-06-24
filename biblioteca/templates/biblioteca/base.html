@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Biblioteca</title>
+</head>
+<body>
+    <h1>Bem-vindo à Biblioteca</h1>
+    <nav>
+        <ul>
+            <li><a href="{% url 'aluno_list' %}">Gerenciar Alunos</a></li>
+            <li><a href="{% url 'livro_list' %}">Gerenciar Livros</a></li>
+            <li><a href="{% url 'emprestimo_list' %}">Gerenciar Empréstimos</a></li>
+            <li><a href="{% url 'busca' %}">Busca</a></li>
+        </ul>
+    </nav>
+    <hr>
+    <p>Escolha uma das opções acima para começar.</p>
+</body>
+</html>

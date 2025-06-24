@@ -1,0 +1,16 @@
+<h1>Empréstimos</h1>
+<a href="{% url 'emprestimo_create' %}">Novo Empréstimo</a>
+<ul>
+  {% for emp in emprestimos %}
+    <li>
+      {{ emp.aluno }} <br> pegou {{ emp.livro }} <br> em {{ emp.data_emprestimo }} <br>
+      {% if emp.data_devolvido %}
+        Devolvido em {{ emp.data_devolvido }}
+      {% else %}
+        <strong>Ativo</strong>
+        [<a href="{% url 'emprestimo_devolver' emp.pk %}">Registrar Devolução</a>]
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+<a href="{% url 'home' %}">← Voltar para a Página Inicial</a>

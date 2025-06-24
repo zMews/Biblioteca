@@ -1,0 +1,34 @@
+
+<h1>Busca</h1>
+
+<form method="get">
+    <input type="text" name="q" placeholder="Buscar aluno ou livro..." value="{{ termo }}">
+    <button type="submit">Buscar</button>
+</form>
+
+{% if termo %}
+    <h2>Resultados para "{{ termo }}"</h2>
+
+    {% if alunos %}
+        <h3>Alunos</h3>
+        <ul>
+            {% for aluno in alunos %}
+                <li>{{ aluno.nome }} – Matrícula: {{ aluno.matricula }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if livros %}
+        <h3>Livros</h3>
+        <ul>
+            {% for livro in livros %}
+                <li>{{ livro.titulo }} – Autor: {{ livro.autor }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if not alunos and not livros %}
+        <p>Nenhum resultado encontrado.</p>
+    {% endif %}
+{% endif %}
+<a href="{% url 'home' %}">← Voltar para a Página Inicial</a>
