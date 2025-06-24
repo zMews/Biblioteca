@@ -1,16 +1,27 @@
-<h1>Empréstimos</h1>
-<a href="{% url 'emprestimo_create' %}">Novo Empréstimo</a>
+<h1>Empréstimos Ativos</h1>
 <ul>
-  {% for emp in emprestimos %}
+  {% for emprestimo in emprestimos_ativos %}
     <li>
-      {{ emp.aluno }} <br> pegou {{ emp.livro }} <br> em {{ emp.data_emprestimo }} <br>
-      {% if emp.data_devolvido %}
-        Devolvido em {{ emp.data_devolvido }}
-      {% else %}
-        <strong>Ativo</strong>
-        [<a href="{% url 'emprestimo_devolver' emp.pk %}">Registrar Devolução</a>]
-      {% endif %}
+      {{ emprestimo.aluno }} <br> {{ emprestimo.livro }} <br> {{ emprestimo.data_emprestimo }} <br> até {{ emprestimo.data_devolucao }}
+      -
+      <a href="{% url 'confirmar_devolucao' emprestimo.id %}">Registrar devolução</a>
     </li>
+  {% empty %}
+    <li>Nenhum empréstimo ativo.</li>
+  {% endfor %}
+</ul>
+
+<hr>
+
+<h1>Empréstimos Finalizados</h1>
+<ul>
+  {% for emprestimo in emprestimos_finalizados %}
+    <li>
+      {{ emprestimo.aluno }} <br> {{ emprestimo.livro }} <br> {{ emprestimo.data_emprestimo }} <br> {{ emprestimo.data_devolucao }}<br>
+      ✅ Devolvido em: {{ emprestimo.data_devolvido }}
+    </li>
+  {% empty %}
+    <li>Nenhum empréstimo finalizado.</li>
   {% endfor %}
 </ul>
 <a href="{% url 'home' %}">← Voltar para a Página Inicial</a>

@@ -74,8 +74,13 @@ def livro_delete(request, pk):
 # Emprestimo
 
 def emprestimo_list(request):
-    emprestimos = Emprestimo.objects.all()
-    return render(request, 'biblioteca/emprestimo_list.html', {'emprestimos': emprestimos})
+    emprestimos_ativos = Emprestimo.objects.filter(data_devolvido__isnull=True)
+    emprestimos_finalizados = Emprestimo.objects.filter(data_devolvido__isnull=False)
+
+    return render(request, 'biblioteca/emprestimo_list.html', {
+        'emprestimos_ativos': emprestimos_ativos,
+        'emprestimos_finalizados': emprestimos_finalizados,
+    })
 
 def emprestimo_create(request):
     form = EmprestimoForm(request.POST or None)
